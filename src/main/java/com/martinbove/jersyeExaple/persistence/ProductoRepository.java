@@ -35,29 +35,16 @@ public class ProductoRepository implements ProductRepository {
 
     @Override
     public Optional<Product> getProduct(Integer productId) {
-        return Optional.empty();
+        return productoCrudRepository.findById(productId).map(producto -> mapper.toProduct(producto));
     }
 
     @Override
     public Product saveProduct(Product product) {
-        return null;
+        return mapper.toProduct(productoCrudRepository.save(mapper.toProducto(product)));
     }
 
     @Override
     public void deleteProduct(Integer productId) {
-
-    }
-
-
-    public Optional<Producto> getProducto(Integer idProducto) {
-        return productoCrudRepository.findById(idProducto);
-    }
-
-    public Producto saveProducto(Producto producto) {
-        return productoCrudRepository.save(producto);
-    }
-
-    public void deleProducto(Integer idProducto) {
-        productoCrudRepository.deleteById(idProducto);
+        productoCrudRepository.deleteById(productId);
     }
 }
